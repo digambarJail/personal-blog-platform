@@ -12,14 +12,15 @@
 - git clone https://github.com/digambarJail/personal-blog-platform.git 
 - OR
 - git clone git@github.com:digambarJail/personal-blog-platform.git
-2. Navigate to the backend folder:  
+2. Open the personal-blog-platform folder
+3. Navigate to the backend folder:  
 - cd blog-backend
-3. Install Dependencies
+4. Install Dependencies
 - npm install
-4. Create a `.env` file in the backend and add:  
+5. Create a `.env` file in the backend and add:  
 - MONGO_URI=your_mongodb_connection_string 
 - JWT_SECRET=your_secret_key
-5. Start the backend server:  
+6. Start the backend server:  
 npm start
 
 
