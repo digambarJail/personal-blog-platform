@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { useDispatch } from "react-redux";
 import { login } from "@/redux/slices/authSlice";
 import axios from "axios";
+import { loginUser } from "@/lib/auth";
 
 
 export default function LoginPage() {
@@ -19,22 +20,14 @@ export default function LoginPage() {
     setError("");
 
     try {
-      const apiUrl = process.env.NEXT_PUBLIC_API_URL;
-      const res = await axios.post(
-        `${apiUrl}/api/auth/login`,
-        { email, password },
-        { withCredentials: true } // Ensures cookies are stored
-      );
-      
-      // const data = await res.json();
-      if (!res) throw new Error("Login failed");
+      const data = await loginUser(email, password);
 
       dispatch(login());
-      localStorage.setItem("userId", res.data.userId);
+      localStorage.setItem("userId", data.userId);
 
-      router.push("/dashboard"); // Redirect to home page
+      router.push("/dashboard"); // Redirect to dashboard
     } catch (err: any) {
-      setError("Login failed! Please try again");
+      setError(err.message);
     }
   };
 

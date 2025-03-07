@@ -1,44 +1,12 @@
 export const dynamic = "force-dynamic"; // Ensures fresh data on every request
 
-import PostCard from "../components/PostCard";
 import AuthorFilter from "../components/AuthorFilter";
-import axios from "axios";
+import { fetchPosts } from "../lib/postsService";
 
-interface Author {
-  email: string;
-}
-
-interface Post {
-  _id: string;
-  authorId: Author;
-}
-
-// Fetch posts server-side
-async function fetchPosts(): Promise<Post[]> {
-  const apiUrl = process.env.API_URL;
-  try {
-    const res = await axios.get(`${apiUrl}/api/posts`, {
-      withCredentials: true,
-      headers: {
-        "Content-Type": "application/json",
-        "Cache-Control": "no-cache, no-store, must-revalidate",
-        "Pragma": "no-cache",
-        "Expires": "0",
-      },
-    });
-
-    if (!res) throw new Error(`Failed to fetch posts`);
-
-    return res.data;
-  } catch (error) {
-    console.error("Error fetching posts:", error);
-    return [];
-  }
-}
 
 // HomePage component (Server-Side Rendering)
 export default async function HomePage() {
-  const posts = await fetchPosts();
+  const posts = await fetchPosts(null);
   const authors: string[] = [...new Set(posts.map((post) => post.authorId.email))];
 
   return (

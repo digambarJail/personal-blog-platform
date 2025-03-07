@@ -1,6 +1,7 @@
 "use client";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { signupUser } from "@/lib/auth";
 
 export default function SignupPage() {
   const [email, setEmail] = useState("");
@@ -17,20 +18,13 @@ export default function SignupPage() {
       return;
     }
 
-    const apiUrl = process.env.NEXT_PUBLIC_API_URL;
-    const res = await fetch(`${apiUrl}/api/auth/signup`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ email, password }),
-    });
-
-    if (res.ok) {
+    try {
+      await signupUser(email, password);
       router.push("/login"); // Redirect to login after successful signup
-    } else {
-      setError("Signup failed. Try again.");
+    } catch (err: any) {
+      setError(err.message);
     }
   };
-
   return (
     <div className="flex min-h-screen items-center justify-center bg-gray-100 dark:bg-gray-900">
       <div className="w-full max-w-md bg-white dark:bg-gray-800 shadow-md rounded-lg p-6 border-gray-300 border-2">

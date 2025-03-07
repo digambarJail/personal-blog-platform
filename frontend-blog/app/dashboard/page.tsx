@@ -3,10 +3,22 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useSelector } from "react-redux";
 import axios from "axios";
+import { createPost, fetchPosts } from "@/lib/postsService";
+
+interface Author {
+  email: string;
+}
+
+interface Post {
+  _id: string;
+  title: string;
+  authorId: Author;
+  content: string;
+}
 
 export default function Dashboard() {
   const isAuthenticated = useSelector((state: any) => state.auth.isAuthenticated);  // Get authentication state from Redux
-  const [posts, setPosts] = useState<{ _id: number; title: string; content: string }[]>([]);
+  const [posts, setPosts] = useState<Post[]>([]);
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const router = useRouter();
@@ -15,60 +27,34 @@ export default function Dashboard() {
     if (!isAuthenticated) {
       router.replace("/login"); // Redirect to login if not authenticated
     } else {
-      fetchPosts();  // Fetch posts if authenticated
+
+      const getPosts = async () =>{
+        const userId = localStorage.getItem("userId");
+
+        const postsData = await fetchPosts(userId);  // Fetch posts if authenticated
+        setPosts(postsData)
+      }
+
+      getPosts();
     }
   }, [isAuthenticated]);
 
-  async function fetchPosts() {
-
-    try {
-      const apiUrl = process.env.NEXT_PUBLIC_API_URL;
-      const userId = localStorage.getItem("userId");
-      
-      const res = await axios.get(`${apiUrl}/api/posts`, {
-        params: { author: userId },
-        withCredentials: true,
-      });
-
-      if (res) {
-        setPosts(res.data);
-      }
-    } catch (error) {
-      console.error("Error fetching posts:", error);
-    }
-  }
-
-  async function handlePost() {
+  const handlePost = async () => {
+    const userId = localStorage.getItem('userId')
     if (!title || !content) {
       alert("Please enter both title and content.");
       return;
     }
-
     try {
-      const apiUrl = process.env.NEXT_PUBLIC_API_URL;
-
-      const res = await axios.post(
-        `${apiUrl}/api/post`,
-        { title, content }, // Data to be sent in the request body
-        {
-          headers: {
-            "Content-Type": "application/json"
-          },
-          withCredentials: true, // Ensures cookies and authentication credentials are sent
-        }
-      );
-
-      if (res) {
-        setTitle("");
-        setContent("");
-        fetchPosts();
-      } else {
-        alert("Failed to create post.");
-      }
+      await createPost(title, content);
+      setTitle("");
+      setContent("");
+      const postsData = await fetchPosts(userId);
+      setPosts(postsData)
     } catch (error) {
-      console.error("Error posting:", error);
+      alert("Failed to create post.");
     }
-  }
+  };
 
   if (isAuthenticated === null) {
     return <p className="text-center text-lg text-gray-600">Checking authentication...</p>;
