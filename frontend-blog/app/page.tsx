@@ -17,7 +17,11 @@ async function fetchPosts(): Promise<Post[]> {
   const apiUrl = process.env.API_URL;
   try {
     const res = await axios.get(`${apiUrl}/api/posts`, {
-      withCredentials: true, // Ensures authentication credentials are sent if needed
+      withCredentials: true,
+      headers: {
+        "Content-Type": "application/json",
+        "Cache-Control": "no-cache"
+      },
     });    
     
     if (!res) throw new Error(`Failed to fetch posts`);
