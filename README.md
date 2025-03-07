@@ -13,6 +13,7 @@
 - OR
 - git clone git@github.com:digambarJail/personal-blog-platform.git
 2. Open the personal-blog-platform folder
+- cd personal-blog-platform
 3. Navigate to the backend folder:  
 - cd blog-backend
 4. Install Dependencies
@@ -30,8 +31,8 @@ npm start
 2. Install dependencies:
 - npm install
 3. Create a `.env.local` file in the frontend and add:  
-NEXT_PUBLIC_API_URL=http://localhost:5000
-API_URL=http://localhost:5000
+- NEXT_PUBLIC_API_URL=http://localhost:5000
+- API_URL=http://localhost:5000
 4. Start the frontend development server:  
 - npm run dev
 
