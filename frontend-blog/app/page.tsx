@@ -2,8 +2,18 @@ import "@/app/globals.css";
 import PostCard from "../components/PostCard";
 
 async function fetchPosts() {
-  const res = await fetch("http://localhost:5000/api/getPosts");
-  return res.json();
+  try {
+    const res = await fetch("http://localhost:5000/api/getPosts");
+
+    if (!res.ok) {
+      throw new Error(`Failed to fetch posts, status: ${res.status}`);
+    }
+
+    return await res.json();
+  } catch (error) {
+    console.error("Error fetching posts:", error);
+    return [];
+  }
 }
 
 export default async function HomePage() {
