@@ -23,7 +23,6 @@ export default function Dashboard() {
 
     try {
       const apiUrl = process.env.NEXT_PUBLIC_API_URL;
-      const token = localStorage.getItem("authToken");
       const userId = localStorage.getItem("userId");
       
       const res = await axios.get(`${apiUrl}/api/posts`, {
@@ -32,7 +31,6 @@ export default function Dashboard() {
       });
 
       if (res) {
-        console.log('data',res.data)
         setPosts(res.data);
       }
     } catch (error) {
@@ -111,7 +109,9 @@ export default function Dashboard() {
           posts.map((post) => (
             <div key={post._id} className="bg-white dark:bg-gray-800 p-4 rounded-lg shadow-md">
               <h4 className="text-lg font-semibold text-gray-900 dark:text-gray-100">{post.title}</h4>
-              <p className="text-gray-600 dark:text-gray-300">{post.content}</p>
+              <div className="whitespace-pre-line">
+                {post.content}
+              </div>  
             </div>
           ))
         ) : (
