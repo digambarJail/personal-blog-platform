@@ -20,9 +20,11 @@ async function fetchPosts(): Promise<Post[]> {
       withCredentials: true,
       headers: {
         "Content-Type": "application/json",
-        "Cache-Control": "no-cache"
+        "Cache-Control": "no-cache, no-store, must-revalidate",
+        "Pragma": "no-cache",
+        "Expires": "0",
       },
-    });    
+    });  
     
     if (!res) throw new Error(`Failed to fetch posts`);
 
