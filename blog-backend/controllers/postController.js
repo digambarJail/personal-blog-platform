@@ -1,6 +1,6 @@
 import Post from "../models/Post.js";
 
-// ✅ Create a new post
+//  Create a new post
 export const createPost = async (req, res) => {
   try {
     const { title, content } = req.body;
@@ -12,7 +12,7 @@ export const createPost = async (req, res) => {
   }
 };
 
-// ✅ Get all posts (or by author)
+//  Get all posts (or by author)
 export const getPosts = async (req, res) => {
   try {
     console.log("req.user:", req.user);

@@ -3,7 +3,8 @@ import PostCard from "../components/PostCard";
 
 async function fetchPosts() {
   try {
-    const res = await fetch("http://localhost:5000/api/getPosts");
+    const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+    const res = await fetch(`${apiUrl}/api/getPosts`);
 
     if (!res.ok) {
       throw new Error(`Failed to fetch posts, status: ${res.status}`);

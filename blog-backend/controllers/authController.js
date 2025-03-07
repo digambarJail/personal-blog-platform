@@ -2,7 +2,7 @@ import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import User from "../models/User.js";
 
-// ✅ Signup Controller
+//  Signup Controller
 export const signup = async (req, res) => {
   try {
     const { email, password } = req.body;
@@ -25,7 +25,7 @@ export const signup = async (req, res) => {
   }
 };
 
-// ✅ Login Controller
+//  Login Controller
 export const login = async (req, res) => {
   try {
     const { email, password } = req.body;

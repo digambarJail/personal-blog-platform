@@ -20,11 +20,13 @@ export default function Dashboard() {
   }, []);
 
   async function fetchPosts() {
+
     try {
+      const apiUrl = process.env.NEXT_PUBLIC_API_URL;
       const token = localStorage.getItem("authToken");
       const userId = localStorage.getItem("userId");
       
-      const res = await fetch(`http://localhost:5000/api/getPosts?author=${userId}`, {
+      const res = await fetch(`${apiUrl}/api/getPosts?author=${userId}`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -47,7 +49,8 @@ export default function Dashboard() {
     }
 
     try {
-      const res = await fetch("http://localhost:5000/api/createPost", {
+      const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+      const res = await fetch(`${apiUrl}/api/createPost`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
