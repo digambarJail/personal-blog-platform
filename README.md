@@ -9,6 +9,9 @@
 
 ### Backend Setup  
 1. Clone the repository  
+- git clone https://github.com/digambarJail/personal-blog-platform.git 
+- OR
+- git clone git@github.com:digambarJail/personal-blog-platform.git
 2. Navigate to the backend folder:  
 - cd blog-backend
 3. Install Dependencies
