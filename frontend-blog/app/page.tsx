@@ -1,5 +1,6 @@
 import PostCard from "../components/PostCard";
 import AuthorFilter from "../components/AuthorFilter";
+import axios from "axios";
 
 interface Author {
   email: string;
@@ -15,9 +16,13 @@ interface Post {
 async function fetchPosts(): Promise<Post[]> {
   const apiUrl = process.env.NEXT_PUBLIC_API_URL;
   try {
-    const res = await fetch(`${apiUrl}/api/posts`, { cache: 'no-store' });
-    if (!res.ok) throw new Error(`Failed to fetch posts, status: ${res.status}`);
-    return await res.json();
+    const res = await axios.get(`${apiUrl}/api/posts`, {
+      withCredentials: true, // Ensures authentication credentials are sent if needed
+    });    
+    
+    if (!res) throw new Error(`Failed to fetch posts`);
+
+    return await res.data;
   } catch (error) {
     console.error('Error fetching posts:', error);
     return [];
@@ -32,8 +37,8 @@ export default async function HomePage() {
   const authors: string[] = [...new Set(posts.map((post) => post.authorId.email))];
 
   return (
-    <div className="max-w-4xl mx-auto mt-12 p-8 bg-white dark:bg-gray-900 shadow-lg rounded-xl">
-      <h1 className="text-4xl font-extrabold text-center text-gray-900 dark:text-gray-100 mb-8 tracking-tight">
+    <div className="max-w-4xl mx-auto mt-12 p-8 bg-gray-900 shadow-lg rounded-xl">
+      <h1 className="text-4xl font-extrabold text-center text-blue-400 dark:text-gray-100 mb-8 tracking-tight">
         📖 All Blog Posts
       </h1>
 

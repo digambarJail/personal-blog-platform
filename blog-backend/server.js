@@ -4,13 +4,22 @@ import cors from "cors";
 import connectDB from "./config/db.js";
 import authRoutes from "./routes/authRoutes.js";
 import postRoutes from "./routes/postRoutes.js";
+import cookieParser from "cookie-parser";
+
 
 dotenv.config();
 connectDB();
 
 const app = express();
+app.use(
+    cors({
+      origin: ["http://localhost:3000", "https://personal-blog-platform-sigma.vercel.app"],
+      credentials: true,
+    })
+  );
 app.use(express.json());
-app.use(cors());
+app.use(cookieParser()); 
+  
 
 app.use("/api/auth", authRoutes);
 app.use("/api", postRoutes);

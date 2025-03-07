@@ -1,23 +1,23 @@
 "use client";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import { useSelector } from "react-redux";
+import axios from "axios";
 
 export default function Dashboard() {
-  const [isAuthenticated, setIsAuthenticated] = useState<boolean | null>(null);
+  const isAuthenticated = useSelector((state: any) => state.auth.isAuthenticated);  // Get authentication state from Redux
   const [posts, setPosts] = useState<{ _id: number; title: string; content: string }[]>([]);
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const router = useRouter();
 
   useEffect(() => {
-    const token = localStorage.getItem("authToken");
-    if (!token) {
-      router.replace("/login");
+    if (!isAuthenticated) {
+      router.replace("/login"); // Redirect to login if not authenticated
     } else {
-      setIsAuthenticated(true);
-      fetchPosts();
+      fetchPosts();  // Fetch posts if authenticated
     }
-  }, []);
+  }, [isAuthenticated]);
 
   async function fetchPosts() {
 
@@ -26,16 +26,14 @@ export default function Dashboard() {
       const token = localStorage.getItem("authToken");
       const userId = localStorage.getItem("userId");
       
-      const res = await fetch(`${apiUrl}/api/posts?author=${userId}`, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
+      const res = await axios.get(`${apiUrl}/api/posts`, {
+        params: { author: userId },
+        withCredentials: true,
+      });
 
-      if (res.ok) {
-        const data = await res.json();
-        console.log('data',data)
-        setPosts(data);
+      if (res) {
+        console.log('data',res.data)
+        setPosts(res.data);
       }
     } catch (error) {
       console.error("Error fetching posts:", error);
@@ -50,16 +48,19 @@ export default function Dashboard() {
 
     try {
       const apiUrl = process.env.NEXT_PUBLIC_API_URL;
-      const res = await fetch(`${apiUrl}/api/post`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${localStorage.getItem("authToken")}`,
-        },
-        body: JSON.stringify({ title, content }),
-      });
 
-      if (res.ok) {
+      const res = await axios.post(
+        `${apiUrl}/api/post`,
+        { title, content }, // Data to be sent in the request body
+        {
+          headers: {
+            "Content-Type": "application/json"
+          },
+          withCredentials: true, // Ensures cookies and authentication credentials are sent
+        }
+      );
+
+      if (res) {
         setTitle("");
         setContent("");
         fetchPosts();

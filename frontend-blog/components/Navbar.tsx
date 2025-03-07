@@ -1,37 +1,31 @@
 "use client";
 
-import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import { useDispatch, useSelector } from "react-redux";
+import { logout } from "../redux/slices/authSlice";
+import { RootState } from "../redux/store";
 
 export default function Navbar() {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const dispatch = useDispatch();
   const router = useRouter();
-
-  useEffect(() => {
-    const token = localStorage.getItem("authToken");
-    console.log('authtok',token,!!token)
-    setIsLoggedIn(!!token); // True if token exists, else false
-  }, []);
+  const isLoggedIn = useSelector((state: RootState) => state.auth.isAuthenticated);
 
   const handleLogout = () => {
-    localStorage.removeItem("authToken");
-    window.location.reload();
-    setIsLoggedIn(false);
-
+    dispatch(logout());
     router.push("/login");
   };
 
   return (
-    <nav className="bg-white dark:bg-gray-900 shadow-md">
-      <div className="container mx-auto flex justify-between items-center p-4">
+    <nav className="bg-gray-900 shadow-md py-5">
+      <div className="container mx-auto flex justify-between items-center px-6 py-4">
         {/* Logo */}
-        <Link href="/" className="text-2xl font-bold text-blue-600 dark:text-blue-400">
+        <Link href="/" className="text-2xl font-bold text-blue-400 hover:text-blue-300 transition-colors">
           MyBlog
         </Link>
 
         {/* Navigation Links */}
-        <div className="space-x-6">
+        <div className="flex gap-6">
           <NavLink href="/">Home</NavLink>
 
           {!isLoggedIn ? (
@@ -44,7 +38,7 @@ export default function Navbar() {
               <NavLink href="/dashboard">Dashboard</NavLink>
               <button
                 onClick={handleLogout}
-                className="text-gray-700 dark:text-gray-300 hover:text-red-600 dark:hover:text-red-400 transition-colors duration-300"
+                className="bg-red-600 text-white px-4 py-2 rounded-md hover:bg-red-500 transition-colors"
               >
                 Logout
               </button>
@@ -61,7 +55,7 @@ function NavLink({ href, children }: { href: string; children: React.ReactNode }
   return (
     <Link
       href={href}
-      className="text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors duration-300"
+      className="text-gray-300 hover:text-white transition-colors"
     >
       {children}
     </Link>

@@ -2,12 +2,17 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { useDispatch } from "react-redux";
+import { login } from "@/redux/slices/authSlice";
+import axios from "axios";
+
 
 export default function LoginPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const router = useRouter();
+  const dispatch = useDispatch();
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -15,24 +20,25 @@ export default function LoginPage() {
 
     try {
       const apiUrl = process.env.NEXT_PUBLIC_API_URL;
-      const res = await fetch(`${apiUrl}/api/auth/login`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, password }),
-      });
+      const res = await axios.post(
+        `${apiUrl}/api/auth/login`,
+        { email, password },
+        { withCredentials: true } // Ensures cookies are stored
+      );
+      
+      // const data = await res.json();
+      if (!res) throw new Error("Login failed");
 
-      const data = await res.json();
-      if (!res.ok) throw new Error(data.message || "Login failed");
+      dispatch(login());
+      localStorage.setItem("userId", res.data.userId);
 
-      localStorage.setItem("authToken", data.token); // Store token in local storage
-      localStorage.setItem("userId", data.userId);
       router.push("/dashboard"); // Redirect to home page
     } catch (err: any) {
       setError(err.message);
     }
   };
 
-  return (
+  return (  
     <div className="min-h-screen flex items-center justify-center bg-gray-900 text-white">
       <div className="w-full max-w-md bg-gray-800 p-8 rounded-xl shadow-lg">
         <h2 className="text-3xl font-bold text-center text-blue-400">Welcome Back</h2>
@@ -83,3 +89,4 @@ export default function LoginPage() {
     </div>
   );
 }
+

@@ -34,20 +34,22 @@ export default function SignupPage() {
   return (
     <div className="flex min-h-screen items-center justify-center bg-gray-100 dark:bg-gray-900">
       <div className="w-full max-w-md bg-white dark:bg-gray-800 shadow-md rounded-lg p-6">
-        <h2 className="text-2xl font-bold text-center text-gray-800 dark:text-gray-200 mb-6">
+        <h2 className="text-2xl font-bold text-center text-blue-400 mb-6">
           Sign Up
         </h2>
+        <p className="text-gray-400 text-center mb-2">Create your account</p>
+
 
         {error && <p className="text-red-500 text-center mb-4">{error}</p>}
 
-        <div className="space-y-4">
+        <div className="space-y-4 mt-2">
           {/* Email Input */}
           <input
             type="email"
             placeholder="Email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            className="w-full p-3 border border-gray-300 dark:border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white"
+            className="w-full mt-2 p-3 border border-gray-300 dark:border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white"
           />
 
           {/* Password Input */}
