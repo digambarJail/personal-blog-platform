@@ -14,7 +14,7 @@ interface Post {
 
 // Fetch posts server-side
 async function fetchPosts(): Promise<Post[]> {
-  const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+  const apiUrl = process.env.API_URL;
   try {
     const res = await axios.get(`${apiUrl}/api/posts`, {
       withCredentials: true, // Ensures authentication credentials are sent if needed
