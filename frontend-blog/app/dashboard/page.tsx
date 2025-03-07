@@ -26,7 +26,7 @@ export default function Dashboard() {
       const token = localStorage.getItem("authToken");
       const userId = localStorage.getItem("userId");
       
-      const res = await fetch(`${apiUrl}/api/getPosts?author=${userId}`, {
+      const res = await fetch(`${apiUrl}/api/posts?author=${userId}`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -50,7 +50,7 @@ export default function Dashboard() {
 
     try {
       const apiUrl = process.env.NEXT_PUBLIC_API_URL;
-      const res = await fetch(`${apiUrl}/api/createPost`, {
+      const res = await fetch(`${apiUrl}/api/post`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

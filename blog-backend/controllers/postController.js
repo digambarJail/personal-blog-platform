@@ -15,10 +15,8 @@ export const createPost = async (req, res) => {
 //  Get all posts (or by author)
 export const getPosts = async (req, res) => {
   try {
-    console.log("req.user:", req.user);
-
+    console.log('got called')
     const userId = req.query.author || req.user?.id; // Use query parameter or authenticated user ID
-    console.log("userId:", userId);
 
     const filter = userId ? { authorId: userId } : {}; // If no userId, fetch all posts
 
