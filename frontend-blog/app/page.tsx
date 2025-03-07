@@ -6,7 +6,7 @@ import { fetchPosts } from "../lib/postsService";
 
 // HomePage component (Server-Side Rendering)
 export default async function HomePage() {
-  const posts = await fetchPosts(null);
+  const posts = await fetchPosts(null); // User Id null means fetch all posts
   const authors: string[] = [...new Set(posts.map((post) => post.authorId.email))];
 
   return (
