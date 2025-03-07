@@ -40,7 +40,7 @@ API_URL=http://localhost:5000
 - Protected dashboard route  
 - Used browser-safe cookies instead of localStorage for authentication and session management  
 
-## What makes this project standout?  
+## What makes this project stand out?  
 - **Frontend Deployment:** Vercel  
 - **Backend Deployment:** Render  
 - **Live URL:** [Personal Blog Platform](https://personal-blog-platform-sigma.vercel.app/)  
