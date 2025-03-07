@@ -4,7 +4,9 @@ export default function PostCard({ post }: { post: any }) {
       <h3 className="text-2xl font-semibold text-gray-900 dark:text-white mb-2">
         {post.title}
       </h3>
-      <p className="text-gray-700 dark:text-gray-300 mb-4">{post.content}</p>
+      <div className="whitespace-pre-line">
+        {post.content}
+      </div>      
       <small className="text-gray-500 dark:text-gray-400">
         By {post.authorId?.email || "Unknown Author"}
       </small>

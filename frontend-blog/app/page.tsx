@@ -1,3 +1,5 @@
+export const dynamic = "force-dynamic"; // Ensures fresh data on every request
+
 import PostCard from "../components/PostCard";
 import AuthorFilter from "../components/AuthorFilter";
 import axios from "axios";
@@ -9,7 +11,6 @@ interface Author {
 interface Post {
   _id: string;
   authorId: Author;
-  // Other post properties
 }
 
 // Fetch posts server-side
@@ -24,13 +25,13 @@ async function fetchPosts(): Promise<Post[]> {
         "Pragma": "no-cache",
         "Expires": "0",
       },
-    });  
-    
+    });
+
     if (!res) throw new Error(`Failed to fetch posts`);
 
-    return await res.data;
+    return res.data;
   } catch (error) {
-    console.error('Error fetching posts:', error);
+    console.error("Error fetching posts:", error);
     return [];
   }
 }
@@ -38,8 +39,6 @@ async function fetchPosts(): Promise<Post[]> {
 // HomePage component (Server-Side Rendering)
 export default async function HomePage() {
   const posts = await fetchPosts();
-
-  // Extract unique authors from posts
   const authors: string[] = [...new Set(posts.map((post) => post.authorId.email))];
 
   return (
