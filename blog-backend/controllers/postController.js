@@ -15,10 +15,18 @@ export const createPost = async (req, res) => {
 // ✅ Get all posts (or by author)
 export const getPosts = async (req, res) => {
   try {
-    const filter = req.query.author ? { authorId: req.query.author } : {};
+    console.log("req.user:", req.user);
+
+    const userId = req.query.author || req.user?.id; // Use query parameter or authenticated user ID
+    console.log("userId:", userId);
+
+    const filter = userId ? { authorId: userId } : {}; // If no userId, fetch all posts
+
     const posts = await Post.find(filter).populate("authorId", "email");
+
     res.json(posts);
   } catch (error) {
+    console.error("Error fetching posts:", error);
     res.status(500).json({ message: "Error fetching posts", error });
   }
 };

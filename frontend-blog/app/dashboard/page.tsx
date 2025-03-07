@@ -10,8 +10,7 @@ export default function Dashboard() {
   const router = useRouter();
 
   useEffect(() => {
-    const token = localStorage.getItem("token");
-
+    const token = localStorage.getItem("authToken");
     if (!token) {
       router.replace("/login");
     } else {
@@ -22,11 +21,14 @@ export default function Dashboard() {
 
   async function fetchPosts() {
     try {
-      const res = await fetch("http://localhost:5000/api/getPosts", {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
-        },
-      });
+      const token = localStorage.getItem("authToken");
+      const userId = localStorage.getItem("userId");
+      
+      const res = await fetch(`http://localhost:5000/api/getPosts?author=${userId}`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
 
       if (res.ok) {
         const data = await res.json();
@@ -49,7 +51,7 @@ export default function Dashboard() {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
+          Authorization: `Bearer ${localStorage.getItem("authToken")}`,
         },
         body: JSON.stringify({ title, content }),
       });
