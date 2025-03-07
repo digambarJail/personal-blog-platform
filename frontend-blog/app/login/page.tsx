@@ -39,8 +39,8 @@ export default function LoginPage() {
   };
 
   return (  
-    <div className="min-h-screen flex items-center justify-center bg-gray-900 text-white">
-      <div className="w-full max-w-md bg-gray-800 p-8 rounded-xl shadow-lg">
+    <div className="min-h-screen flex items-center justify-center bg-gray-900 text-white ">
+      <div className="w-full max-w-md bg-gray-800 p-8 rounded-xl shadow-lg border-gray-300 border-2">
         <h2 className="text-3xl font-bold text-center text-blue-400">Welcome Back</h2>
         <p className="text-gray-400 text-center mt-2">Login to your account</p>
 
