@@ -34,7 +34,7 @@ export default function LoginPage() {
 
       router.push("/dashboard"); // Redirect to home page
     } catch (err: any) {
-      setError(err.message);
+      setError("Login failed! Please try again");
     }
   };
 
