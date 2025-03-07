@@ -38,7 +38,7 @@ export default function Navbar() {
               <NavLink href="/dashboard">Dashboard</NavLink>
               <button
                 onClick={handleLogout}
-                className="bg-red-600 text-white px-4 py-2 rounded-md hover:bg-red-500 transition-colors"
+                className="bg-red-600 text-white px-4 py-1 mb-2 rounded-md hover:bg-red-500 transition-colors"
               >
                 Logout
               </button>
@@ -47,6 +47,7 @@ export default function Navbar() {
         </div>
       </div>
     </nav>
+
   );
 }
 
