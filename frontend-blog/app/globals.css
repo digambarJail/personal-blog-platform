@@ -1,0 +1,88 @@
+@import "tailwindcss";
+
+/* Root Variables */
+:root {
+  --background: #ffffff;
+  --foreground: #171717;
+  --primary: #2563eb; /* Tailwind Blue-600 */
+  --secondary: #4b5563; /* Tailwind Gray-600 */
+  --accent: #9333ea; /* Tailwind Purple-600 */
+}
+
+/* Dark Mode Variables */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0a0a0a;
+    --foreground: #ededed;
+    --primary: #3b82f6; /* Tailwind Blue-500 */
+    --secondary: #9ca3af; /* Tailwind Gray-400 */
+    --accent: #c084fc; /* Tailwind Purple-400 */
+  }
+}
+
+/* Apply Global Styles */
+body {
+  background-color: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans, "Inter", Arial, Helvetica, sans-serif);
+  transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out;
+}
+
+/* Links */
+a {
+  color: var(--primary);
+  text-decoration: none;
+  transition: color 0.2s ease-in-out;
+}
+
+a:hover {
+  color: var(--accent);
+}
+
+/* Container Utility */
+.container {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+/* Card Component */
+.card {
+  background-color: var(--background);
+  color: var(--foreground);
+  border-radius: 12px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  padding: 1.5rem;
+  transition: all 0.3s ease-in-out;
+}
+
+.card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* Button Component */
+.btn {
+  display: inline-block;
+  padding: 0.6rem 1.2rem;
+  font-size: 1rem;
+  font-weight: 600;
+  border-radius: 8px;
+  text-align: center;
+  transition: background 0.3s, transform 0.2s;
+}
+
+.btn-primary {
+  background-color: var(--primary);
+  color: #fff;
+}
+
+.btn-primary:hover {
+  background-color: var(--accent);
+  transform: scale(1.05);
+}
+
+/* Smooth Scrolling */
+html {
+  scroll-behavior: smooth;
+}
