@@ -16,7 +16,8 @@
 ## What makes this project stand out?  
 - **Frontend Deployment:** Vercel  
 - **Backend Deployment:** Render  
-- **Live URL:** [Personal Blog Platform](https://personal-blog-platform-sigma.vercel.app/)  
+- **Live URL:** [Personal Blog Platform](https://personal-blog-platform-sigma.vercel.app/)
+- **Implemented Image Upload with Cloudinary**
 - **Implemented Redux for Session management**
 
 ## How to Start the Project  
