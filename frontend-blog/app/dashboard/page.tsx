@@ -12,6 +12,7 @@ interface Author {
 interface Post {
   _id: string;
   title: string;
+  image: string;
   authorId: Author;
   content: string;
 }
@@ -21,6 +22,8 @@ export default function Dashboard() {
   const [posts, setPosts] = useState<Post[]>([]);
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
+  const [image, setImage] = useState<File | null>(null);
+
   const router = useRouter();
 
   useEffect(() => {
@@ -40,21 +43,34 @@ export default function Dashboard() {
   }, [isAuthenticated]);
 
   const handlePost = async () => {
-    const userId = localStorage.getItem('userId')
     if (!title || !content) {
       alert("Please enter both title and content.");
       return;
     }
+  
+    const userId = localStorage.getItem("userId");
+    const formData = new FormData();
+    formData.append("title", title);
+    formData.append("content", content);
+    formData.append("authorId", userId || "");
+  
+    if (image) {
+      formData.append("image", image);
+    }
+  
     try {
-      await createPost(title, content);
+      await createPost(formData);
       setTitle("");
       setContent("");
+      setImage(null);
       const postsData = await fetchPosts(userId);
-      setPosts(postsData)
+      setPosts(postsData);
     } catch (error) {
       alert("Failed to create post.");
     }
   };
+  
+  
 
   if (isAuthenticated === null) {
     return <p className="text-center text-lg text-gray-600">Checking authentication...</p>;
@@ -80,6 +96,13 @@ export default function Dashboard() {
           onChange={(e) => setContent(e.target.value)}
           className="w-full p-2 border border-gray-300 dark:border-gray-700 rounded-md mb-3 h-24 focus:ring-2 focus:ring-blue-500"
         ></textarea>
+        <input
+          type="file"
+          accept="image/*"
+          onChange={(e) => setImage(e.target.files?.[0] || null)}
+          className="w-full p-2 border border-gray-300 dark:border-gray-700 rounded-md mb-3 focus:ring-2 focus:ring-blue-500"
+        />
+
         <button
           onClick={handlePost}
           className="w-full bg-blue-600 text-white py-2 rounded-md hover:bg-blue-700 transition"
@@ -95,6 +118,9 @@ export default function Dashboard() {
           posts.map((post) => (
             <div key={post._id} className="bg-white dark:bg-gray-800 p-4 rounded-lg shadow-md">
               <h4 className="text-lg font-semibold text-gray-900 dark:text-gray-100">{post.title}</h4>
+              {post.image && ( // Display image if available
+                <img src={post.image} alt="Post Image" className="w-full h-60 object-cover rounded-md mt-2" />
+              )}
               <div className="whitespace-pre-line">
                 {post.content}
               </div>  

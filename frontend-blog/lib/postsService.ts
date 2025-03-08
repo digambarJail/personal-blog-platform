@@ -7,6 +7,7 @@ interface Author {
 interface Post {
   _id: string;
   title:string;
+  image: string;
   authorId: Author;
   content: string;
 }
@@ -14,7 +15,6 @@ interface Post {
 // Fetch posts server-side
 export async function fetchPosts(userId: string | null): Promise<Post[]> {
   const apiUrl = process.env.NEXT_PUBLIC_API_URL;
-  console.log('apissss',apiUrl)
   try {
     const res = await axios.get(`${apiUrl}/api/posts`, {
       withCredentials: true,
@@ -36,21 +36,19 @@ export async function fetchPosts(userId: string | null): Promise<Post[]> {
   }
 }
 
-export const createPost = async (title: string, content: string) => {
+export const createPost = async (formData: FormData) => {
   const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 
-  try {
-    const res = await axios.post(
-      `${apiUrl}/api/post`,
-      { title, content },
-      {
-        headers: { "Content-Type": "application/json" },
-        withCredentials: true,
-      }
-    );
-    return res.data;
-  } catch (error) {
-    console.error("Error creating post:", error);
-    throw error;
-  }
+  const response = await axios.post(
+    `${apiUrl}/api/post`, // Adjust API URL accordingly
+    formData,
+    {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+      withCredentials: true
+    }
+  );
+
+  return response.data;
 };

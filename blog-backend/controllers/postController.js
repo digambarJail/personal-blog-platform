@@ -1,10 +1,24 @@
 import Post from "../models/Post.js";
+import { uploadImageToCloudinary } from "../utils/cloudinary.js";
 
 //  Create a new post
 export const createPost = async (req, res) => {
   try {
     const { title, content } = req.body;
-    const newPost = new Post({ title, content, authorId: req.user.id });
+    if (!title || !content) {
+      return res.status(400).json({ message: "Title and content are required" });
+    }
+    let imageUrl = "";
+    if (req.file) {
+      const uploadedImage = await uploadImageToCloudinary(req.file.buffer);
+      imageUrl = uploadedImage.url;
+    }
+    const newPost = new Post({
+      title,
+      content,
+      authorId: req.user.id,
+      image: imageUrl, // Store image URL
+    });
     await newPost.save();
     res.status(201).json(newPost);
   } catch (error) {
@@ -19,7 +33,7 @@ export const getPosts = async (req, res) => {
 
     const filter = userId ? { authorId: userId } : {}; // If no userId, fetch all posts
 
-    const posts = await Post.find(filter).populate("authorId", "email");
+    const posts = await Post.find(filter).populate("authorId", "email").sort({ createdAt: -1 });;
 
     res.json(posts);
   } catch (error) {
