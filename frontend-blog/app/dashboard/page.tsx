@@ -118,10 +118,10 @@ export default function Dashboard() {
           posts.map((post) => (
             <div key={post._id} className="bg-white dark:bg-gray-800 p-4 rounded-lg shadow-md">
               <h4 className="text-lg font-semibold text-gray-900 dark:text-gray-100">{post.title}</h4>
-              {post.image && ( // Display image if available
-                <img src={post.image} alt="Post Image" className="w-full h-60 object-cover rounded-md mt-2" />
+              {post.image && (
+                <img src={post.image} alt="Post Image" className="w-full h-60 object-cover rounded-md mt-4" />
               )}
-              <div className="whitespace-pre-line">
+              <div className="whitespace-pre-line mt-5">
                 {post.content}
               </div>  
             </div>
