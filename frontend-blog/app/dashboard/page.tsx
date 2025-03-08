@@ -109,7 +109,7 @@ export default function Dashboard() {
           htmlFor="file-upload"
           className="block w-full p-2 border border-gray-300 dark:border-gray-700 rounded-md mb-3 text-gray-500 bg-white dark:bg-gray-800 text-center cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-700"
         >
-          {image ? image.name : "You can upload image now 😉"}
+          {image ? image.name : "You can upload an image now 😉"}
         </label>
         <input
           id="file-upload"
