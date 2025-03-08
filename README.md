@@ -36,6 +36,10 @@
 5. Create a `.env` file in the backend and add:  
 - MONGO_URI=your_mongodb_connection_string 
 - JWT_SECRET=your_secret_key
+- CLOUDINARY_CLOUD_NAME=cloudinary_name
+- CLOUDINARY_API_KEY=cloudinary_api_key
+- CLOUDINARY_API_SECRET=api_secret
+- #Please note :- Cloudinary envs are required only for testing image upload
 6. Start the backend server:  
 npm start
 
