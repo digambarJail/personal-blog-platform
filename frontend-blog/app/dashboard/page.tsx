@@ -84,7 +84,7 @@ export default function Dashboard() {
   }
 
   return (
-    <div className="max-w-4xl mx-auto mt-12 p-8 bg-white dark:bg-gray-900 shadow-lg rounded-xl border-gray-300 border-2">
+    <div className="lg:max-w-4xl mx-2 lg:mx-auto mt-12 p-5 bg-white dark:bg-gray-900 shadow-lg rounded-xl border-gray-300 border-2">
       <ToastContainer /> 
       <h2 className="text-3xl font-bold text-center text-gray-900 dark:text-gray-100 mb-6">📊 Dashboard</h2>
 

@@ -26,8 +26,8 @@ export default function SignupPage() {
     }
   };
   return (
-    <div className="flex min-h-screen items-center justify-center bg-gray-100 dark:bg-gray-900">
-      <div className="w-full max-w-md bg-white dark:bg-gray-800 shadow-md rounded-lg p-6 border-gray-300 border-2">
+    <div className="flex  min-h-screen items-center justify-center bg-gray-100 dark:bg-gray-900">
+      <div className="w-full mx-3 lg:max-w-md bg-white dark:bg-gray-800 shadow-md rounded-lg p-6 border-gray-300 border-2">
         <h2 className="text-2xl font-bold text-center text-blue-400 mb-6">
           Sign Up
         </h2>
