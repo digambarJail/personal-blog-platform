@@ -4,8 +4,9 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { useDispatch } from "react-redux";
 import { login } from "@/redux/slices/authSlice";
-import axios from "axios";
 import { loginUser } from "@/lib/auth";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 
 export default function LoginPage() {
@@ -16,6 +17,8 @@ export default function LoginPage() {
   const dispatch = useDispatch();
 
   const handleLogin = async (e: React.FormEvent) => {
+    toast.info("Logging in ...", { autoClose: 2000 });
+
     e.preventDefault();
     setError("");
 
@@ -25,7 +28,11 @@ export default function LoginPage() {
       dispatch(login());
       localStorage.setItem("userId", data.userId);
 
-      router.push("/dashboard"); // Redirect to dashboard
+      toast.success("Login successful! Redirecting...", { autoClose: 2000 });
+
+      setTimeout(() => {
+        router.push("/dashboard");
+      }, 2000);
     } catch (err: any) {
       setError(err.message);
     }
@@ -33,6 +40,7 @@ export default function LoginPage() {
 
   return (  
     <div className="min-h-screen flex items-center justify-center bg-gray-900 text-white ">
+      <ToastContainer /> 
       <div className="w-full max-w-md bg-gray-800 p-8 rounded-xl shadow-lg border-gray-300 border-2">
         <h2 className="text-3xl font-bold text-center text-blue-400">Welcome Back</h2>
         <p className="text-gray-400 text-center mt-2">Login to your account</p>
@@ -79,6 +87,7 @@ export default function LoginPage() {
           </a>
         </p>
       </div>
+
     </div>
   );
 }

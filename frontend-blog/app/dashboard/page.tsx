@@ -2,8 +2,9 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useSelector } from "react-redux";
-import axios from "axios";
 import { createPost, fetchPosts } from "@/lib/postsService";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 interface Author {
   email: string;
@@ -47,6 +48,8 @@ export default function Dashboard() {
       alert("Please enter both title and content.");
       return;
     }
+
+    toast.info("Posting ...", { autoClose: 2000 });
   
     const userId = localStorage.getItem("userId");
     const formData = new FormData();
@@ -63,6 +66,10 @@ export default function Dashboard() {
       setTitle("");
       setContent("");
       setImage(null);
+      
+      toast.success("Boom! Post Successful !", { autoClose: 3000 });
+      
+
       const postsData = await fetchPosts(userId);
       setPosts(postsData);
     } catch (error) {
@@ -78,6 +85,7 @@ export default function Dashboard() {
 
   return (
     <div className="max-w-4xl mx-auto mt-12 p-8 bg-white dark:bg-gray-900 shadow-lg rounded-xl border-gray-300 border-2">
+      <ToastContainer /> 
       <h2 className="text-3xl font-bold text-center text-gray-900 dark:text-gray-100 mb-6">📊 Dashboard</h2>
 
       {/* Create Post Section */}
@@ -96,11 +104,19 @@ export default function Dashboard() {
           onChange={(e) => setContent(e.target.value)}
           className="w-full p-2 border border-gray-300 dark:border-gray-700 rounded-md mb-3 h-24 focus:ring-2 focus:ring-blue-500"
         ></textarea>
+
+        <label
+          htmlFor="file-upload"
+          className="block w-full p-2 border border-gray-300 dark:border-gray-700 rounded-md mb-3 text-gray-500 bg-white dark:bg-gray-800 text-center cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-700"
+        >
+          {image ? image.name : "You can upload image now 😉"}
+        </label>
         <input
+          id="file-upload"
           type="file"
           accept="image/*"
           onChange={(e) => setImage(e.target.files?.[0] || null)}
-          className="w-full p-2 border border-gray-300 dark:border-gray-700 rounded-md mb-3 focus:ring-2 focus:ring-blue-500"
+          className="hidden"
         />
 
         <button
