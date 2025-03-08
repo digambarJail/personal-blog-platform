@@ -5,7 +5,6 @@ import connectDB from "./config/db.js";
 import authRoutes from "./routes/authRoutes.js";
 import postRoutes from "./routes/postRoutes.js";
 import cookieParser from "cookie-parser";
-import cron from "node-cron"
 
 dotenv.config();
 connectDB();
@@ -19,19 +18,6 @@ app.use(
   );
 app.use(express.json());
 app.use(cookieParser()); 
- 
-cron.schedule("*/5 * * * *", async () => { // Runs every 5 minutes
-  console.log("Pinging the server to keep it awake...");
-  try {
-    await fetch("https://personal-blog-platform-7jot.onrender.com/ping");
-  } catch (error) {
-    console.error("Ping failed:", error);
-  }
-});
-
-app.get("/ping", (req, res) => {
-  res.send("Server is awake!");
-});
 
 app.use("/api/auth", authRoutes);
 app.use("/api", postRoutes);
