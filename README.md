@@ -3,7 +3,21 @@
 ## Tech Stack  
 - **Frontend:** Next.js 14 with TypeScript, TailwindCSS  
 - **Backend:** Node.js, Express.js  
-- **Database:** MongoDB  
+- **Database:** MongoDB
+
+## Features  
+- JWT-based authentication  
+- Secured password storage with hashed passwords  
+- Implemented all necessary backend routes and frontend pages  
+- Used SSR for the homepage  
+- Protected dashboard route  
+- Used browser-safe cookies instead of localStorage for authentication and session management  
+
+## What makes this project stand out?  
+- **Frontend Deployment:** Vercel  
+- **Backend Deployment:** Render  
+- **Live URL:** [Personal Blog Platform](https://personal-blog-platform-sigma.vercel.app/)  
+- **Implemented Redux for Session management**
 
 ## How to Start the Project  
 
@@ -35,19 +49,4 @@ npm start
 - API_URL=http://localhost:5000
 4. Start the frontend development server:  
 - npm run dev
-
-
-## Features  
-- JWT-based authentication  
-- Secured password storage with hashed passwords  
-- Implemented all necessary backend routes and frontend pages  
-- Used SSR for the homepage  
-- Protected dashboard route  
-- Used browser-safe cookies instead of localStorage for authentication and session management  
-
-## What makes this project stand out?  
-- **Frontend Deployment:** Vercel  
-- **Backend Deployment:** Render  
-- **Live URL:** [Personal Blog Platform](https://personal-blog-platform-sigma.vercel.app/)  
-- **Implemented Redux for Session management**
 
