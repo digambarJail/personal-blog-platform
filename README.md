@@ -1,7 +1,7 @@
 # Personal Blog Platform
 
 ## Live URL :- https://personal-blog-platform-sigma.vercel.app
-- The backend is deployed on Render's free tier, which may cause the app to enter sleep mode due to inactivity. If you experience any issues, please refresh the page 3–4 times to resolve the problem.
+### NOTE :- The backend is deployed on Render's free tier, which may cause the app to enter sleep mode due to inactivity. If you experience any issues, please refresh the page 3–4 times to resolve the problem.
 
 ## Tech Stack  
 - **Frontend:** Next.js 14 with TypeScript, TailwindCSS  
